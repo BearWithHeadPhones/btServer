@@ -1,6 +1,7 @@
-from bluetooth import *
-from threading import Thread
+#!/usr/bin/env python
+
 import time
+import subprocess
 
 from neopixel import *
 
@@ -24,55 +25,27 @@ def colorWipe(strip, color, wait_ms=50):
         """Wipe color across display a pixel at a time."""
         for i in range(strip.numPixels()):
                 strip.setPixelColor(i, color)
-                strip.show()
                 time.sleep(wait_ms/1000.0)
+                strip.show()
+                #time.sleep(wait_ms/1000.0)
+
+
+def pairing (parent):
+    while False == parent.stopped():
+        colorWipe(strip,Color(0,0,1))
+        colorWipe(strip,Color(0,0,0))
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+def paired (parent):
+     colorWipe(strip,Color(0,1,0))
 
 from bluetoothUtils import server
 from controller import reqController
 import Queue
-from interface import btMessage_pb2, Color_pb2
+from interface import btMessage_pb2, Led_pb2
+from anim import AnimationRunner
 
 class Handler():
     def __init__(self, predicateFunc, runFunc):
@@ -87,22 +60,66 @@ class Handler():
 
 
 def pred(item):
-    return  item.type == btMessage_pb2.BTMessage.COLOR
+    return  item != "green" and item.type == btMessage_pb2.BTMessage.LED
 
 def run(item) :
-    colorWipe(strip, Color(item.color.red, item.color.green, item.color.blue))
-    print "usatwiam: " + str(item.color)
+    print item
+    strip.setPixelColor(item.led.index, Color(item.led.red, item.led.green, item.led.blue))
+    strip.show()
+    print "ustawiam: " + str(item.led)
 
-redLedHandler =  Handler(pred,run)
 
+def predGreen(item):
+    return  item == "green"
+
+def runGreen(item) :
+    colorWipe(strip, Color(0, 255, 0))
+    print "usatwiam: green"
+
+
+
+mask =[0,0,0,0,0,0,0,0]
+
+def predINT(item):
+    print "pred"
+    return True
+
+def runINT(item):
+    if mask[item] == 0 :
+        print "zmieniam"
+        strip.setPixelColor(item, Color(255, 255, 255))
+        mask[item] = 1
+    else :
+        strip.setPixelColor(item, Color(0, 0, 0))
+        mask[item] = 0
+    strip.show()
+
+
+colorWipe(strip, Color(0, 0, 0))
+animRunner = AnimationRunner.AnimationRunner()
+
+
+
+time.sleep(5000/1000.0)
+
+
+colorLedHandler =  Handler(pred,run)
+greenLedHandler =  Handler(predGreen,runGreen)
+intLedHandler =  Handler(predINT,runINT)
 
 handlers = []
-handlers.append(redLedHandler)
+handlers.append(colorLedHandler)
 
+sdptoolregisterrfcomm = subprocess.Popen("sudo sdptool add sp", shell=True)
+sdptoolregisterrfcomm.wait()
+
+print "registered sp"
 notifQueue = Queue.Queue()
-bt_server = server.BTServer(notifQueue)
+bt_server = server.BTServer(notifQueue, animRunner)
 req_Controller = reqController.ReqController(notifQueue,handlers)
+
 req_Controller.start()
 bt_server.start()
+
 
 

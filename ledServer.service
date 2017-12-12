@@ -1,0 +1,13 @@
+[Unit]
+Description="BlinkyLedServer"
+
+[Service]
+Type=simple
+TimeoutStartSec=0
+WorkingDirectory=/home/pi/development/python/ledServer/ledServer
+ExecStart=/home/pi/development/python/ledServer/ledServer/main.py
+Restart=always
+User=root
+
+[Install]
+WantedBy=multi-user.target

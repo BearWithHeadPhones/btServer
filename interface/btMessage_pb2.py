@@ -13,16 +13,17 @@ from google.protobuf import descriptor_pb2
 _sym_db = _symbol_database.Default()
 
 
-import Color_pb2 as Color__pb2
+import Led_pb2 as Led__pb2
+import Stripe_pb2 as Stripe__pb2
 
 
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='btMessage.proto',
   package='',
   syntax='proto3',
-  serialized_pb=_b('\n\x0f\x62tMessage.proto\x1a\x0b\x43olor.proto\"f\n\tBTMessage\x12\x1d\n\x04type\x18\x01 \x01(\x0e\x32\x0f.BTMessage.Type\x12\x15\n\x05\x63olor\x18\x02 \x01(\x0b\x32\x06.Color\"#\n\x04Type\x12\t\n\x05\x43OLOR\x10\x00\x12\x07\n\x03\x42\x41R\x10\x01\x12\x07\n\x03\x42\x41Z\x10\x02\x62\x06proto3')
+  serialized_pb=_b('\n\x0f\x62tMessage.proto\x1a\tLed.proto\x1a\x0cStripe.proto\"|\n\tBTMessage\x12\x1d\n\x04type\x18\x01 \x01(\x0e\x32\x0f.BTMessage.Type\x12\x11\n\x03led\x18\x02 \x01(\x0b\x32\x04.Led\x12\x17\n\x06stripe\x18\x03 \x01(\x0b\x32\x07.Stripe\"$\n\x04Type\x12\x07\n\x03LED\x10\x00\x12\n\n\x06STRIPE\x10\x01\x12\x07\n\x03\x42\x41Z\x10\x02\x62\x06proto3')
   ,
-  dependencies=[Color__pb2.DESCRIPTOR,])
+  dependencies=[Led__pb2.DESCRIPTOR,Stripe__pb2.DESCRIPTOR,])
 
 
 
@@ -33,11 +34,11 @@ _BTMESSAGE_TYPE = _descriptor.EnumDescriptor(
   file=DESCRIPTOR,
   values=[
     _descriptor.EnumValueDescriptor(
-      name='COLOR', index=0, number=0,
+      name='LED', index=0, number=0,
       options=None,
       type=None),
     _descriptor.EnumValueDescriptor(
-      name='BAR', index=1, number=1,
+      name='STRIPE', index=1, number=1,
       options=None,
       type=None),
     _descriptor.EnumValueDescriptor(
@@ -47,8 +48,8 @@ _BTMESSAGE_TYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   options=None,
-  serialized_start=99,
-  serialized_end=134,
+  serialized_start=132,
+  serialized_end=168,
 )
 _sym_db.RegisterEnumDescriptor(_BTMESSAGE_TYPE)
 
@@ -68,8 +69,15 @@ _BTMESSAGE = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='color', full_name='BTMessage.color', index=1,
+      name='led', full_name='BTMessage.led', index=1,
       number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='stripe', full_name='BTMessage.stripe', index=2,
+      number=3, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -87,12 +95,13 @@ _BTMESSAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=32,
-  serialized_end=134,
+  serialized_start=44,
+  serialized_end=168,
 )
 
 _BTMESSAGE.fields_by_name['type'].enum_type = _BTMESSAGE_TYPE
-_BTMESSAGE.fields_by_name['color'].message_type = Color__pb2._COLOR
+_BTMESSAGE.fields_by_name['led'].message_type = Led__pb2._LED
+_BTMESSAGE.fields_by_name['stripe'].message_type = Stripe__pb2._STRIPE
 _BTMESSAGE_TYPE.containing_type = _BTMESSAGE
 DESCRIPTOR.message_types_by_name['BTMessage'] = _BTMESSAGE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)

@@ -1,13 +1,16 @@
 syntax = "proto3";
-import "Color.proto";
+import "Led.proto";
+import "Stripe.proto";
+
 message BTMessage {
-  enum Type { COLOR = 0; BAR = 1; BAZ = 2; }
+  enum Type { LED = 0; STRIPE = 1; BAZ = 2; }
 
   // Identifies which field is filled in.
   Type type = 1;
 
   // One of the following will be filled in.
-  Color color = 2;
+  Led led = 2;
+  Stripe stripe = 3;
   //optional Bar bar = 3;
   //optional Baz baz = 4;
 }

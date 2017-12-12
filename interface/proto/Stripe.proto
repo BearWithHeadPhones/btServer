@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+import "Led.proto";
+
+message Stripe {
+    repeated Led leds = 1;
+}

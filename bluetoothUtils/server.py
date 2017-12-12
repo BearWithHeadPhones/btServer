@@ -1,13 +1,16 @@
 from bluetooth import *
 import threading
 from interface import btMessage_pb2
+import anim.animations
+from anim.AnimationRunner import Loop,OneTime
 
 
 class BTServer (threading.Thread):
-   def __init__(self, notificationQueue):
+   def __init__(self, notificationQueue, animationRunner):
       threading.Thread.__init__(self)
       #self.daemon = True
       self.notificationQueue = notificationQueue
+      self.animationRunner = animationRunner
 
    def run(self):
 
@@ -24,21 +27,23 @@ class BTServer (threading.Thread):
                              #                   protocols = [ OBEX_UUID ]
                              )
           print "waiting for connection"
+          self.animationRunner.animate(Loop(anim.animations.pairing))
           client_sock, client_info = server_sock.accept()
           print "Accepted connection from ", client_info
+          self.animationRunner.animate(OneTime(anim.animations.paired))
           while True:
               global serializedMessage
 
               try :
                 serializedMessage = client_sock.recv(1024)
               except:
-                  break
-                  clien_sock.close()
+                  client_sock.close()
                   server_sock.close()
+                  break
 
               deserializedMessage = btMessage_pb2.BTMessage()
               deserializedMessage.ParseFromString(serializedMessage)
               self.notificationQueue.put(deserializedMessage)
-
+              #self.notificationQueue.put(int(serializedMessage))
 
 

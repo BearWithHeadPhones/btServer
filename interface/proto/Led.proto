@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+
+message Led {
+  int32 index = 1;
+  int32 red = 2;
+  int32 green = 3;
+  int32 blue = 4;
+}
