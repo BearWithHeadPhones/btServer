@@ -1,13 +1,16 @@
 [Unit]
 Description="BlinkyLedServer"
+After=bluetooth.target
+Requires=bluetooth.target
 
 [Service]
 Type=simple
-TimeoutStartSec=0
+TimeoutStartSec=1
 WorkingDirectory=/home/pi/development/python/ledServer/ledServer
 ExecStart=/home/pi/development/python/ledServer/ledServer/main.py
 Restart=always
 User=root
+Nice = 19
 
 [Install]
 WantedBy=multi-user.target
