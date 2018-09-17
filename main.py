@@ -4,8 +4,9 @@ import subprocess
 from bluetoothUtils import server
 from controller import reqController
 import Queue
-import time
 from anim import AnimationRunner, animations
+import signal
+import sys
 
 animRunner = AnimationRunner.AnimationRunner()
 animRunner.animate(AnimationRunner.OneTime(animations.clear))
@@ -20,8 +21,6 @@ req_Controller = reqController.ReqController(notifQueue,reqController.getHandler
 req_Controller.start()
 bt_server.start()
 
-import signal
-import sys
 def signal_handler(sig, frame):
     bt_server.closeSockets()
     sys.exit(0)

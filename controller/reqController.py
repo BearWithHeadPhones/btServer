@@ -48,6 +48,12 @@ def predPulse(item):
 def animPulse(item):
     return AnimationRunner.Loop(animations.pulse)
 
+def predStripe(item):
+    return item.type == btMessage_pb2.BTMessage.STRIPE
+
+def animStripe(item):
+    return AnimationRunner.OneTime(functools.partial(animations.stripe,item))
+
 def getHandlers():
     handlers = []
     handlers.append(Handler(pred ,anim))
@@ -55,6 +61,7 @@ def getHandlers():
     handlers.append(Handler(predSetPixel,setPixel))
     handlers.append(Handler(predStrobo, animStrobo))
     handlers.append(Handler(predPulse, animPulse))
+    handlers.append(Handler(predStripe, animStripe))
     return handlers
 
 

@@ -13,12 +13,29 @@ class BTServer (threading.Thread):
       self.animationRunner = animationRunner
       self.server_sock = None
       self.client_sock = None
+      self.BUFFER = 1024
+
    def closeSockets(self):
        print "closing sockets"
 
        self.server_sock.close()
        if self.client_sock :
            self.client_sock.close()
+
+   def receiveAlllData(self):
+       data = b''
+       partcount = 0
+       while True:
+           part = self.client_sock.recv(self.BUFFER)
+           data += part
+           try:
+               deserializedMessage = btMessage_pb2.BTMessage()
+               deserializedMessage.ParseFromString(bytes(data))
+               return deserializedMessage
+           except :
+               print "exception trying next:" + str(partcount)
+               pass
+
 
    def run(self):
 
@@ -40,17 +57,11 @@ class BTServer (threading.Thread):
           print "Accepted connection from ", client_info
           self.animationRunner.animate(OneTime(anim.animations.paired))
           while True:
-              global serializedMessage
-
               try :
-                serializedMessage = self.client_sock.recv(1024)
+                  self.notificationQueue.put(self.receiveAlllData())
               except:
+
                   self.client_sock.close()
                   self.server_sock.close()
                   break
-
-              deserializedMessage = btMessage_pb2.BTMessage()
-              deserializedMessage.ParseFromString(serializedMessage)
-              self.notificationQueue.put(deserializedMessage)
-
 

@@ -80,11 +80,6 @@ def clear(item = None):
         strip.show()
 
 def strobo(item = None):
-    for i in range(strip.numPixels()/2):
-        strip.setPixelColor(i*2, Color(255, 255, 255))
-        strip.setPixelColor(i*2 +1, Color(0, 0, 0))
-    strip.show()
-    time.sleep(50 / 1000.0)
     for i in range(strip.numPixels()):
         strip.setPixelColor(i, Color(0, 0, 0))
     strip.show()
@@ -98,6 +93,11 @@ def strobo(item = None):
         strip.setPixelColor(i, Color(0, 0, 0))
     strip.show()
     time.sleep(50 / 1000.0)
+    for i in range(strip.numPixels()/2):
+        strip.setPixelColor(i*2, Color(255, 255, 255))
+        strip.setPixelColor(i*2 +1, Color(0, 0, 0))
+    strip.show()
+    time.sleep(50 / 1000.0)
 
 
 def setColorToEntireStrip(r,g,b, brightness):
@@ -105,10 +105,18 @@ def setColorToEntireStrip(r,g,b, brightness):
         strip.setPixelColor(i , Color(int(r * brightness), int(g * brightness), int(b * brightness)))
 
 def pulse(item = None):
-    for i in np.arange(1.5*math.pi, 3.5*math.pi, math.pi/50):
+    for i in np.arange(1.5*math.pi, 3.5*math.pi, math.pi/100):
         setColorToEntireStrip(0,255,0,((math.sin(i))+1)/2)
         strip.show()
         time.sleep(10 / 1000.0)
+
+
+def stripe(item):
+    for led in item.stripe.leds:
+        if led.index >= strip.numPixels():
+            break
+        strip.setPixelColor(led.index, Color(led.red, led.green, led.blue))
+        strip.show()
 
 
 
