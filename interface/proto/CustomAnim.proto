@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+import "Stripe.proto";
+
+message CustomAnim {
+    repeated Stripe frames = 1;
+    int32 fps = 2;
+
+}

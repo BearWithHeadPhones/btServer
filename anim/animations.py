@@ -120,3 +120,9 @@ def stripe(item):
 
 
 
+def customAnim(item):
+    for frame in item.customAnimation.frames:
+        for led in frame.leds:
+            strip.setPixelColor(led.index, Color(led.red, led.green, led.blue))
+        strip.show()
+        time.sleep(1/float(item.customAnimation.fps))

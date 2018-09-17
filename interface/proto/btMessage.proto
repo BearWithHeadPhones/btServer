@@ -2,9 +2,10 @@ syntax = "proto3";
 import "Led.proto";
 import "Stripe.proto";
 import "Anim.proto";
+import "CustomAnim.proto";
 
 message BTMessage {
-  enum Type { LED = 0; STRIPE = 1; ANIM = 2; }
+  enum Type { LED = 0; STRIPE = 1; ANIM = 2; CUSTOMANIM = 3;}
 
   // Identifies which field is filled in.
   Type type = 1;
@@ -13,6 +14,6 @@ message BTMessage {
   Led led = 2;
   Stripe stripe = 3;
   Anim animation = 4;
-  //optional Bar bar = 3;
-  //optional Baz baz = 4;
+  CustomAnim customAnimation = 5;
+
 }

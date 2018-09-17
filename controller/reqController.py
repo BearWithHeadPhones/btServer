@@ -54,6 +54,12 @@ def predStripe(item):
 def animStripe(item):
     return AnimationRunner.OneTime(functools.partial(animations.stripe,item))
 
+def predCustomAnim(item):
+    return item.type == btMessage_pb2.BTMessage.CUSTOMANIM
+
+def animCustomAnim(item):
+    return AnimationRunner.Loop(functools.partial(animations.customAnim,item))
+
 def getHandlers():
     handlers = []
     handlers.append(Handler(pred ,anim))
@@ -62,6 +68,7 @@ def getHandlers():
     handlers.append(Handler(predStrobo, animStrobo))
     handlers.append(Handler(predPulse, animPulse))
     handlers.append(Handler(predStripe, animStripe))
+    handlers.append(Handler(predCustomAnim, animCustomAnim))
     return handlers
 
 

@@ -16,15 +16,16 @@ _sym_db = _symbol_database.Default()
 import Led_pb2 as Led__pb2
 import Stripe_pb2 as Stripe__pb2
 import Anim_pb2 as Anim__pb2
+import CustomAnim_pb2 as CustomAnim__pb2
 
 
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='btMessage.proto',
   package='',
   syntax='proto3',
-  serialized_pb=_b('\n\x0f\x62tMessage.proto\x1a\tLed.proto\x1a\x0cStripe.proto\x1a\nAnim.proto\"\x97\x01\n\tBTMessage\x12\x1d\n\x04type\x18\x01 \x01(\x0e\x32\x0f.BTMessage.Type\x12\x11\n\x03led\x18\x02 \x01(\x0b\x32\x04.Led\x12\x17\n\x06stripe\x18\x03 \x01(\x0b\x32\x07.Stripe\x12\x18\n\tanimation\x18\x04 \x01(\x0b\x32\x05.Anim\"%\n\x04Type\x12\x07\n\x03LED\x10\x00\x12\n\n\x06STRIPE\x10\x01\x12\x08\n\x04\x41NIM\x10\x02\x62\x06proto3')
+  serialized_pb=_b('\n\x0f\x62tMessage.proto\x1a\tLed.proto\x1a\x0cStripe.proto\x1a\nAnim.proto\x1a\x10\x43ustomAnim.proto\"\xcd\x01\n\tBTMessage\x12\x1d\n\x04type\x18\x01 \x01(\x0e\x32\x0f.BTMessage.Type\x12\x11\n\x03led\x18\x02 \x01(\x0b\x32\x04.Led\x12\x17\n\x06stripe\x18\x03 \x01(\x0b\x32\x07.Stripe\x12\x18\n\tanimation\x18\x04 \x01(\x0b\x32\x05.Anim\x12$\n\x0f\x63ustomAnimation\x18\x05 \x01(\x0b\x32\x0b.CustomAnim\"5\n\x04Type\x12\x07\n\x03LED\x10\x00\x12\n\n\x06STRIPE\x10\x01\x12\x08\n\x04\x41NIM\x10\x02\x12\x0e\n\nCUSTOMANIM\x10\x03\x62\x06proto3')
   ,
-  dependencies=[Led__pb2.DESCRIPTOR,Stripe__pb2.DESCRIPTOR,Anim__pb2.DESCRIPTOR,])
+  dependencies=[Led__pb2.DESCRIPTOR,Stripe__pb2.DESCRIPTOR,Anim__pb2.DESCRIPTOR,CustomAnim__pb2.DESCRIPTOR,])
 
 
 
@@ -46,11 +47,15 @@ _BTMESSAGE_TYPE = _descriptor.EnumDescriptor(
       name='ANIM', index=2, number=2,
       options=None,
       type=None),
+    _descriptor.EnumValueDescriptor(
+      name='CUSTOMANIM', index=3, number=3,
+      options=None,
+      type=None),
   ],
   containing_type=None,
   options=None,
-  serialized_start=171,
-  serialized_end=208,
+  serialized_start=227,
+  serialized_end=280,
 )
 _sym_db.RegisterEnumDescriptor(_BTMESSAGE_TYPE)
 
@@ -90,6 +95,13 @@ _BTMESSAGE = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='customAnimation', full_name='BTMessage.customAnimation', index=4,
+      number=5, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -103,14 +115,15 @@ _BTMESSAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=57,
-  serialized_end=208,
+  serialized_start=75,
+  serialized_end=280,
 )
 
 _BTMESSAGE.fields_by_name['type'].enum_type = _BTMESSAGE_TYPE
 _BTMESSAGE.fields_by_name['led'].message_type = Led__pb2._LED
 _BTMESSAGE.fields_by_name['stripe'].message_type = Stripe__pb2._STRIPE
 _BTMESSAGE.fields_by_name['animation'].message_type = Anim__pb2._ANIM
+_BTMESSAGE.fields_by_name['customAnimation'].message_type = CustomAnim__pb2._CUSTOMANIM
 _BTMESSAGE_TYPE.containing_type = _BTMESSAGE
 DESCRIPTOR.message_types_by_name['BTMessage'] = _BTMESSAGE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
